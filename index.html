@@ -1,0 +1,538 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>hosts服务</title>
+    <style>
+        .container {
+            width: 70%;
+            margin: 10% auto 0;
+            background-color: #f0f0f0;
+            padding: 2% 5%;
+            border-radius: 10px
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            line-height: 2.3
+        }
+
+        a {
+            color: #20a53a
+        }
+    </style>
+    <script>
+        var hm = document.createElement("script");
+        hm.src = "https://file-git.trli.club/file/js/background-html.js";
+        var s = document.getElementsByTagName("title")[0];
+        s.parentNode.insertBefore(hm, s);
+    </script>
+
+    <script>
+        Date.prototype.format = function (fmt) {
+            var o = {
+                "y+": this.getFullYear, //年
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds() //秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        setInterval("document.getElementById('dateTime').innerHTML = (new Date()).format('yyyy-MM-dd hh:mm:ss');", 100);
+    </script>
+    <div id="ytWidget"></div>
+    <script
+        src="https://translate.yandex.net/website-widget/v1/widget.js?widgetId=ytWidget&pageLang=ru&widgetTheme=dark&trnslKey=trnsl.1.1.20160709T133816Z.f5d66a42d77a4e51.ddf29e47bba7c2db465f2749b8b52335a3922d07&autoMode=false"
+        type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="container">
+        <ul>
+            <h5>
+                <details>
+                    <summary>📃 项目说明/Project description</summary>
+                    <code>
+        <li>🛑Only for learning, communication, self-use, academic research use, do not commercial use!! Please comply with local laws and regulations, download must be deleted within 24 hours ！！！！</li>
+        <li>🛑仅供学习交流和自用、学术研究使用，请勿商用!!!请遵守当地法律法规，下载后24小时内必须删除！！！！</li>
+        <li>International/China accelerated ad filtering rules subscription.</li>
+        <li>国际/中国加速广告过滤规则订阅</li>
+        <li>Cold Mo (TRLI) rules is the only one to provide a global comparison of the library.</li>
+        <li>冷莫规则是唯一一个提供全球比较全的库。</li>
+        <li>This rule is a popular rule on upstream Github and GitLab. It is not maintained by me. I only maintain the whitelist that uses this rule</li>
+        <li>这个规则是上游Github和GitLab的流行规则，它不是我的维护者，我只维护白名单使用这个规则。</li>
+        <li>The blacklist and whitelist have been processed, that is, the blacklist has been used, and the mistakenly killed domain name has been processed</li>
+        <li>The black and white list is global</li>
+        <li>Let me know if it was a mistak</li>
+        <li>已经处理黑白名单，即使用了黑名单，在处理的时候已经把误杀的域名处理了</li>
+        <li>黑白名单是全球的</li>
+        <li>误杀就告诉我</li>
+        </code>
+                </details>
+            </h5>
+
+            <h5>
+<li>Total ad-hosts-pro 屏蔽追踪广告总数: 9803453
+<li>Total ad-hosts-lite 屏蔽追踪广告总数: 9491592
+<li>Total allowlist list 允许名单总数: 102239
+<li>Total ad-youtube-hosts 屏蔽追踪广告总数: 3967
+<li>Total DNS分流加速国内规则列表总数: 146213
+<li>Total DNS分流加速国外规则列表总数: 715480
+            </h5>
+
+            <h5>
+                <details><summary>📃 dns其他服务/DNS other service [以iOS14以上和macOS11配置]</summary>
+                    <details><summary>📃  阿里 DoT/DoH (Alidns)<a href="https://help.aliyun.com/document_detail/176821.html?spm=a2c4g.171664.0.0.5f7d60a75Mkg3u#h2-bmo-jy0-zby">以iOS14以上和macOS11配置为例</a></summary>
+                        <code>
+                            <table border="alidns">
+                                <tr><td style="text-align: center;">阿里 DoT/DoH (Alidns)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                                <tr><td style="text-align: center;">ios14-alidns-doh</td><td style="text-align: center;" ><a href="https://dns-tool.oss-cn-beijing.aliyuncs.com/doh-sdk/desc/Signed-AliDNS-https-Host.mobileconfig">dns.alidns.dns-doh.mobileconfig</a></td></tr>
+                                <tr><td style="text-align: center;">ios14-alidns-dot</td><td style="text-align: center;" ><a href="https://dns-tool.oss-cn-beijing.aliyuncs.com/doh-sdk/desc/Signed-AliDNS-TLS-Host.mobileconfig">dns.alidns.dns-dot.mobileconfig</a></td></tr>
+                            </table>
+                        </code>
+                    </details>
+            
+                    <details><summary>📃  腾讯 DoT/DoH (DNSPod)</summary>
+                        <code>
+                            <table border="txdns">
+                                <tr><td style="text-align: center;">腾讯 DoT/DoH (DNSPod)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                                <tr><td style="text-align: center;">ios14-doh.pub-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/doh.pub-doh.mobileconfig">doh.pub-doh.mobileconfig</a></td></tr>
+                                <tr><td style="text-align: center;">ios14-sm2-doh.pub-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/sm2-doh.pub-doh.mobileconfig">sm2-doh.pub-doh.mobileconfig</a></td></tr>
+                                <tr><td style="text-align: center;">ios14-dot.pub-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dot.pub-dot.mobileconfig">dot.pub-dot.mobileconfig</a></td></tr>
+                            </table>
+                        </code>
+                    </details>
+            
+                    <details><summary>📃  360 DoT/DoH (360)</summary>
+                        <code>
+                            <table border="360dns">
+                                <tr><td style="text-align: center;">360 DoT/DoH (360)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                                <tr><td style="text-align: center;">ios14-doh.360.cn-doh</td><td style="text-align: center;" ><a href="https://sdns.360.net/360-public-https.mobileconfig">doh.360.cn-doh.mobileconfig</a></td></tr>
+                                <tr><td style="text-align: center;">ios14-dot.360.cn-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dot.360.cn-dot.mobileconfig">dot.360.cn-dot.mobileconfig</a></td></tr>
+                            </table>
+                        </code>
+                    </details>
+            
+                    <details><summary>📃  onedns.net DoT/DoH (onedns)</summary>
+                        <code>
+                            <table border="onedns">
+                                <tr><td style="text-align: center;">onedns.net DoT/DoH (onedns)</td><td style="text-align: center;">🚀 链接/Link</td></tr>
+                                <tr><td style="text-align: center;">ios14-doh-pure.onedns.net-doh</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/doh-pure.onedns.net.mobileconfig">doh-pure.onedns.net.mobileconfig</a></td></tr>
+                                <tr><td style="text-align: center;">ios14-dot-pure.onedns.net.mobileconfig-dot</td><td style="text-align: center;" ><a href="https://file-git.trli.club/file/ios-dns/other/dot-pure.onedns.net.mobileconfig">dot-pure.onedns.net.mobileconfig</a></td></tr>
+                            </table>
+                        </code>
+                    </details>
+                </details>        
+            </h5>
+            <h5>
+                <details>
+                    <summary>📃 其他/Other </summary>
+                    <code>
+        <li><strong>您的浏览器UA为：</strong> <script type="text/javascript"> document.write(navigator.userAgent); </script> </li>
+        <li><strong>ip地址 网站连通性检查</strong><iframe src="https://ip.skk.moe/simple" style="width: 100%; border: 0"></iframe></li>
+        <li><strong>dns地址 网站连通性检查</strong><script src="https://nstool.netease.com/info.js">style = "width: 100%; border: 0" ></script>
+        <script type="text/javascript">
+                document.write('当前IP：' + ip + '  ' + ip_province + ' ' + ip_city + ' ' + ip_isp + '<br/>');
+            document.write('当前DNS：' + dns + '  ' + dns_province + ' ' + dns_city + ' ' + dns_isp + '<br/>');
+            document.write(msg + '<br/>');
+        </script>
+        </li>
+        </code>
+                </details>
+            </h5>
+
+
+            <h5>
+                <details>
+                    <summary>📃 GitHub加速规则列表/GitHub Acceleration rule list </summary>
+                    <code>
+            <li>📃 更新时间为每1个小时更新一次。/The update time is every hour.</li>
+            <table border="GitHub加速规则列表/GitHub Acceleration rule list">
+            <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link/🚀 DownloadLink</td><td style="text-align: center;">网盘/cloud</td></tr>
+            <tr><td style="text-align: center;">Hosts加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/github-hosts/Accelerate-Hosts.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+	    <tr><td style="text-align: center;">gfw加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/github-hosts/gfw-hosts.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>    
+            <tr><td style="text-align: center;">bilibili-Hosts加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-hosts.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+	    </table>
+        </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 GitHub-dns加速规则列表/GitHub-dns Acceleration rule list </summary>
+                    <code>
+            <li>📃 更新时间为每1个小时更新一次。/The update time is every hour.</li>
+            <table border="GitHub加速规则列表/GitHub Acceleration rule list">
+            <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link/🚀 DownloadLink</td><td style="text-align: center;">网盘/cloud</td></tr>
+            <tr><td style="text-align: center;">Hosts加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/github--dnstype/Accelerate-Hosts-dnstype.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+	    <tr><td style="text-align: center;">gfw加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/github--dnstype/gfw-Hosts-dnstype.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>    
+            <tr><td style="text-align: center;">bilibili-Hosts加速 </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/github--dnstype/github-hosts/bilibili-hosts-dnstype.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+	    </table>
+        </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 cn-blocked-domain(gfw) </summary>
+                    <code>
+            <li>📃 更新时间为每24小时更新一次。/The update time is every 24 hours.</li>
+            <table border="cn-blocked-domain(gfw)">
+            <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td></tr>
+            <tr><td style="text-align: center;">cn-blocked-domain </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/domains.txt">Link</a></td></tr>
+            <tr><td style="text-align: center;">cn-blocked-ip </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/ip.txt">Link</a></td></tr>
+            <tr><td style="text-align: center;">cn-blocked-raw </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/raw.txt">Link</a></td></tr>
+            </table>
+        </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 去广告规则列表/Go to the AD rule list </summary>
+                    <code>
+            <li>📃 更新时间为每6-12小时更新一次。/The update time is every 24 hours.</li>
+
+            <details><summary>其他规则/Other rules</summary>
+            <code>
+            <table border="其他规则/Other rules">
+                <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link/🚀 DownloadLink</td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">My Allow(我的白名單) </td><td style="text-align: center;"><a href="https://file-git.trli.club/file-hosts/allow/Domains">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                <tr><td style="text-align: center;">Allow(白名單) </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/github-hosts/allow.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                <tr><td style="text-align: center;">edge-domains （For<a href="https://edge.microsoft.com/abusiveadblocking/api/v1/blocklist">edge.microsoft.com</a>） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+            </table>
+            </code>
+            </details>
+
+            <details><summary>AdHosts-Pro 规则/AdHosts-Pro rules</summary>
+            <code>
+            <table border="AdHosts-Pro 规则/AdHosts-Pro rules">
+                <li>🛑AdHosts-Pro 是用全球黑名单和一个我自己的<a href="https://file-git.trli.club/allow/Domains">白名单</a>进行一个规则合并</li>
+                <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link/🚀 DownloadLink</td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-adblock） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adblock.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-hosts/pi-hole） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-hosts.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-adguardhome） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adguardhome.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-adguardhome-dnstype） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adguardhome-dnstype.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-clash）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-clash.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-clash-premium） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-clash-premium.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-dnsmasq） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-dnsmasq.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-domains） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-domains.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-quantumult） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-quantumult.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-shadowrocket） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-shadowrocket.list">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-smartdns.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-surge） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-surge.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-unbound） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-unbound.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">AdHosts-Pro（For ad-bind9） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-bind9.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+            </table>
+            </code>
+            </details>
+
+            <details><summary>AdHosts-lite 规则/AdHosts-lite rules</summary>
+                <code>
+                <table border="AdHosts-lite 规则/AdHosts-lite rules">
+                    <li>🛑AdHosts-lite 是用全球黑名单和的全球白名单<a href="https://github.com/Potterli20/file/releases/download/github-hosts/allow.txt">白名单</a>进行一个规则合并</li>
+                    <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link/🚀 DownloadLink</td><td style="text-align: center;">网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-adblock） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adblock.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-hosts/pi-hole） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-hosts.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-adguardhome） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adguardhome.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-adguardhome-dnstype） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adguardhome-dnstype.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-clash）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-clash.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-clash-premium） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-clash-premium.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-dnsmasq） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-dnsmasq.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-domains） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-domains.txt">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-quantumult） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-quantumult.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-shadowrocket） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-shadowrocket.list">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-smartdns.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-surge） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-surge.yaml">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-unbound） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-unbound.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                    <tr><td style="text-align: center;">AdHosts-lite（For ad-bind9） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-bind9.conf">Link</a></td><td style="text-align: center;"> 网盘/cloud</td></tr>
+                </table>
+                </code>
+                </details>
+
+                <details><summary>YouTuBe去广告规则列表/YouTuBe goes advertising rules list</summary>
+                    <code>
+                    <table border="YouTuBe去广告规则列表/YouTuBe goes advertising rules list">
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-adblock） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adblock.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-hosts/pi-hole） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-hosts.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-adguardhome） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adguardhome.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-adguardhome-dnstype） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adguardhome-dnstype.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-clash）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-clash.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-clash-premium） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-clash-premium.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-dnsmasq） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-dnsmasq.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-domains） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-domains.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-quantumult） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-quantumult.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-shadowrocket） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-shadowrocket.list">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-smartdns.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-surge） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-surge.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-unbound） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-unbound.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                       <tr><td style="text-align: center;">Ad-YouTuBe-Hosts（For ad-bind9） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-bind9.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+                    </table>
+                    </code>
+                    </details>
+
+                </h5>
+                </table>
+                </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 DNS分流加速规则列表/DNS Traffic acceleration rule list</summary>
+                    <code>
+                <li>📃 更新时间为每6-12小时更新一次。/The update time is every 24 hours.</li>
+                <details>
+                    <summary>dnshosts-all 规则/dnshosts-all rules</summary>
+                    <code>
+            <table border="dnshosts-all 规则/dnshosts-all rules">
+                <li>🛑dnshosts-all 是 全部的程序的配置文件 当然 all 的adgh/dnsproxy的上游dns配置文件是包括dns over https、dns over tls、dns over quic 的国内外的公共dns</li>
+                <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国飞快地分流加速规则 /dnshosts-all-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际飞快地分流加速规则 /dnshosts-all-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For bind9） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-bind9-blacklist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For bind9） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-bind9-whitelist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For unbound） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-unbound-blacklist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For unbound） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-unbound-whitelist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For dnsmasq） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-dnsmasq-blacklist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For dnsmasq） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-dnsmasq-whitelist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-blacklist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国飞快地分流加速规则 /dnshosts-all-China is shunting accelerated rules（For smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-blacklist_lite.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-whitelist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际飞快地分流加速规则 dnshosts-all-International Rapid shunt acceleration rules（For smartdns） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-whitelist_lite.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国完整的分流加速规则 /dnshosts-all-China's complete triage acceleration rules（For domain） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国飞快地分流加速规则 /dnshosts-all-China is shunting accelerated rules（For domain） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-blacklist_lite.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For domain） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际飞快地分流加速规则 /dnshosts-all-International Rapid shunt acceleration rules（For domain） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-whitelist_lite.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete shunt acceleration rules（For smartdns-domain-rules） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-domain-rules-blacklist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-中国飞快地分流加速规则 /dnshosts-all-China is shunting accelerated rules（For smartdns-domain-rules） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-domain-rules-blacklist_lite.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际完整的分流加速规则 /dnshosts-all-International complete triage acceleration rules（For smartdns-domain-rules） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-domain-rules-whitelist_full.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                <tr><td style="text-align: center;">dnshosts-all-国际飞快地分流加速规则 /dnshosts-all-International Rapid shunt acceleration rules（For smartdns-domain-rules） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-domain-rules-whitelist_lite.conf">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+            </table>
+        </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-pro 规则(旧版)/dnshosts-adgh-pro rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-pro 规则/dnshosts-adgh-pro rules">
+                        <li>🛑dnshosts-adgh-pro 是 adguardhome/dnsproxy 配置文件 包括域名的dns over https、dns over tls、dns over quic 不包括ip 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-中国完整的分流加速规则 /dnshosts-adgh-pro-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-中国飞快地分流加速规则 /dnshosts-adgh-pro-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-国际完整的分流加速规则 /dnshosts-adgh-pro-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-国际飞快地分流加速规则 /dnshosts-adgh-pro-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                    </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-pro 规则(新版)/dnshosts-adgh-pro rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-pro 规则/dnshosts-adgh-pro rules">
+                        <li>🛑dnshosts-adgh-pro 是 adguardhome/dnsproxy 配置文件 包括域名的dns over https、dns over tls、dns over quic、dns over http3 不包括ip 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-中国完整的分流加速规则 /dnshosts-adgh-pro-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-中国飞快地分流加速规则 /dnshosts-adgh-pro-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-国际完整的分流加速规则 /dnshosts-adgh-pro-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-pro-国际飞快地分流加速规则 /dnshosts-adgh-pro-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                    </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https 规则(旧版)/dnshosts-adgh-lite-https rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https 规则/dnshosts-adgh-lite-https rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名的dns over https 不包括ip 域名的 dns over tls、dns over quic、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lte-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https 规则(新版)/dnshosts-adgh-lite-https rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https 规则/dnshosts-adgh-lite-https rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名的dns over https 不包括ip 域名的 dns over tls、dns over quic、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lte-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https/dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https-all 规则(旧版)/dnshosts-adgh-lite-https-all rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https-all 规则/dnshosts-adgh-lite-https-all rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名的dns over https、dns over http3 不包括ip 域名的 dns over tls、dns over quic 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lte-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https-all 规则(新版)/dnshosts-adgh-lite-https-all rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https-all 规则/dnshosts-adgh-lite-https-all rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名的dns over https、dns over http3 不包括ip 域名的 dns over tls、dns over quic、 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lte-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-all/dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https-lite 规则(旧版)/dnshosts-adgh-lite-https-lite rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https-lite 规则/dnshosts-adgh-lite-https-lite rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括少量域名的dns over https 不包括ip和域名的 dns over tls、dns over quic、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lte-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-https-lite 规则(新版)/dnshosts-adgh-lite-https-lite rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-https-lite 规则/dnshosts-adgh-lite-https-lite rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括少量域名的dns over https 不包括ip和域名的 dns over tls、dns over quic、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lte-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-https-lite/dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>                
+
+                <details><summary>dnshosts-adgh-lite-853-all 规则(旧版)/dnshosts-adgh-lite-853-all rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-853-all 规则/dnshosts-adgh-lite-853-all rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名和ip的 dns over tls、dns over quic 不包括ip 域名的dns over https、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lte-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-853-all 规则(新版)/dnshosts-adgh-lite-853-all rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-853-all 规则/dnshosts-adgh-lite-853-all rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名和ip的 dns over tls、dns over quic 不包括ip 域名的dns over https、dns over http3 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lte-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-853 规则(旧版)/dnshosts-adgh-lite-853 rules(旧版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-853 规则/dnshosts-adgh-lite-853 rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名和ip的 dns over tls 不包括ip 域名的dns over https、dns over http3、dns over quic 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lite-adguardhome-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lte-adguardhome-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lite-adguardhome-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853-all/dnshosts-adgh-lite-adguardhome-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+
+                <details><summary>dnshosts-adgh-lite-853 规则(新版)/dnshosts-adgh-lite-853 rules(新版)</summary>
+                    <code>
+                    <table border="dnshosts-adgh-lite-853 规则/dnshosts-adgh-lite-853 rules">
+                        <li>🛑dnshosts-adgh-lite  是 adguardhome/dnsproxy 配置文件 包括域名和ip的 dns over tls 不包括ip 域名的dns over https、dns over http3、dns over quic 的国内外的公共dns</li>
+                        <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国完整的分流加速规则 /dnshosts-adgh-lite-China's complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lite-adguardhome-new-blacklist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-中国飞快地分流加速规则 /dnshosts-adgh-lite-China is shunting accelerated rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lte-adguardhome-new-blacklist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际完整的分流加速规则 /dnshosts-adgh-lite-International complete triage acceleration rules（For adguardhome/dnsproxy） </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lite-adguardhome-new-whitelist_full_combine.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        <tr><td style="text-align: center;">dnshosts-adgh-lite-国际飞快地分流加速规则 /dnshosts-adgh-lite-International Rapid shunt acceleration rules（For adguardhome/dnsproxy）  </td><td style="text-align: center;"><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-lite-853/dnshosts-adgh-lite-adguardhome-new-whitelist_full.txt">Link</a></td><td style="text-align: center;">网盘/cloud</td></tr>
+                        </table>
+                    </code>
+                </details>
+                </table>
+                </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 程序分流加速规则列表/List of program shunting acceleration rules </summary>
+                    <code>
+            <li>📃 更新时间为每24小时更新一次。/The update time is every 24 hours.</li>
+                <details>
+                    <summary>网盘/cloud(github)</summary>
+                    <code>
+        <table border="网盘/cloud(github)">
+            <tr><td style="text-align: center;">规则名称/Rule name</td><td style="text-align: center;">🚀 下载Link(github)/🚀 DownloadLink(github)</td><td style="text-align: center;">网盘/cloud</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_autoproxy) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_autoproxy.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_clash) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_clash.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_clash_premium) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_clash_premium.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_quantumult) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_quantumult.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_shadowrocket) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_shadowrocket.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_surge) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_surge.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_v2raya) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_v2raya.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_china_v2rayn) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_v2rayn.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_autoproxy) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_autoproxy.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_clash) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_clash.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_clash_premium) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_clash_premium.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_quantumult)  </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_quantumult.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_shadowrocket) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_shadowrocket.conf">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_surge) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_surge.yaml">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_v2raya) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_v2raya.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+            <tr><td style="text-align: center;">ListPac (For listpac_gfwlist_v2rayn) </td><td style="text-align: center;" ><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_v2rayn.txt">Link</a></td><td style="text-align: center;">网盘/cloud(github)</td></tr>
+        </table>
+    </code>
+                </details>
+                </table>
+                </code>
+                </details>
+            </h5>
+
+            <h5>
+                <details>
+                    <summary>📃 反馈</summary>
+                    <li><a
+                            href="https://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&inviteCode=1NPqQe&from=246610&biz=ka">QQ频道【莫莫频道】</a>
+                    </li>
+                    <li><a href="https://github.com/Potterli20/hosts/discussions">冷莫trli项目反馈(github)</a></li>
+                </details>
+            </h5>
+        </ul>
+        <script async src="https://file-git.trli.club/js/pure.mini.js"></script>
+        <center>系统时间/dateTime<div id="dateTime"></div>
+        </center>
+    </div>
+</body>
+
+</html>
