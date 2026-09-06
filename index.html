@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hosts服务 - TRLI</title>
+    <meta name="description" content="TRLI hosts 服务：国际/中国加速广告过滤规则与 DNS 分流加速规则订阅，提供 AdGuard Home、Clash、Surge、dnsmasq、SmartDNS、Unbound 等多种格式下载。">
+    <meta name="theme-color" content="#667eea">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A1%EF%B8%8F%3C/text%3E%3C/svg%3E">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-primary: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-subtle: #f7fafc;
+            --bg-header: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #667eea;
+            --accent-hover: #5a67d8;
+            --border: #e2e8f0;
+            --success: #48bb78;
+            --warning: #ed8936;
+            --notice-bg: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            --notice-danger-bg: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+            --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-header);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 0 0 var(--radius) var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .header .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        .stat-item strong {
+            color: #fbbf24;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: linear-gradient(90deg, var(--accent) 0%, #8b5cf6 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            user-select: none;
+        }
+
+        .card-header:hover {
+            filter: brightness(1.05);
+        }
+
+        .card-header::after {
+            content: '▼';
+            font-size: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card.open .card-header::after {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .card.open .card-content {
+            display: block;
+        }
+
+        /* Notice */
+        .notice {
+            background: var(--notice-bg);
+            border-left: 4px solid var(--warning);
+            padding: 1rem 1.5rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .notice.danger {
+            background: var(--notice-danger-bg);
+            border-left-color: #ef4444;
+        }
+
+        .notice-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: var(--bg-subtle);
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 0.875rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: var(--bg-subtle);
+        }
+
+        /* Links */
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+
+        /* DNS Grid */
+        .dns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .dns-card {
+            background: var(--bg-subtle);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .dns-card:hover {
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .dns-card h4 {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .dns-card-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .dns-card-item:last-child {
+            border-bottom: none;
+        }
+
+        .dns-card-item span {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+        }
+
+        .datetime {
+            background: var(--bg-card);
+            padding: 1rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                padding: 2rem 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .header .stats {
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .card-content {
+                padding: 1rem;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.625rem;
+            }
+
+            .dns-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+        .card:nth-child(5) { animation-delay: 0.4s; }
+
+        /* Search */
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-family: inherit;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Copy button */
+        td a.btn,
+        .dns-card-item a.btn {
+            margin-right: 0.5rem;
+        }
+
+        .btn-copy {
+            background: var(--bg-subtle);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-copy:hover {
+            background: var(--border);
+            color: var(--text-primary);
+            transform: none;
+        }
+
+        .card-header:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: -4px;
+            border-radius: var(--radius);
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                color-scheme: dark;
+                --bg-primary: #0f172a;
+                --bg-card: #1e293b;
+                --bg-subtle: #26334d;
+                --text-primary: #e2e8f0;
+                --text-secondary: #a5b0c2;
+                --text-muted: #8492a8;
+                --border: #334155;
+                --notice-bg: linear-gradient(135deg, #3b2f10 0%, #443712 100%);
+                --notice-danger-bg: linear-gradient(135deg, #401719 0%, #4d1c1f 100%);
+                --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.35);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🛡️ hosts 服务</h1>
+        <p>国际/中国加速广告过滤规则订阅 / DNS分流加速规则</p>
+        <div class="stats">
+            <div class="stat-item">Ad-hosts-pro: <strong>11,042,010</strong></div>
+            <div class="stat-item">Ad-hosts-lite: <strong>10,781,952</strong></div>
+            <div class="stat-item">Allowlist: <strong>2,007,448</strong></div>
+            <div class="stat-item">DNS国内分流加速规则: <strong>143,868</strong></div>
+            <div class="stat-item">DNS国外分流加速规则: <strong>726,181</strong></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 搜索 -->
+        <div class="search-box">
+            <input id="ruleSearch" type="search" placeholder="🔍 搜索规则，如 clash、surge、adguardhome、国内、youtube…" aria-label="搜索规则">
+        </div>
+
+        <!-- 项目说明 -->
+        <div class="card open">
+            <div class="card-header" onclick="toggleCard(this)">📃 项目说明 / Project Description</div>
+            <div class="card-content">
+                <div class="notice danger">
+                    <div class="notice-title">🛑 免责声明</div>
+                    <p>Only for learning, communication, self-use, academic research use, do not commercial use!!<br>
+                    Please comply with local laws and regulations, download must be deleted within 24 hours !!!!</p>
+                </div>
+                <p style="margin-bottom: 0.5rem;">🛑 仅供学习交流和自用、学术研究使用，请勿商用!!! 请遵守当地法律法规，下载后24小时内必须删除！！！！</p>
+                <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                    <li>冷莫规则是唯一一个提供全球比较全的库</li>
+                    <li>黑白名单是全球的，误杀就告诉我</li>
+                    <li>已经处理黑白名单，即使用了黑名单，在处理的时候已经把误杀的域名处理了</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- DNS 其他服务 -->
+        <div class="card open">
+            <div class="card-header" onclick="toggleCard(this)">🔧 DNS 其他服务 / DNS Other Service</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">以iOS 14以上和macOS 11配置</p>
+                <div class="dns-grid">
+                    <div class="dns-card">
+                        <h4>🟢 阿里 DoT/DoH (Alidns)</h4>
+                        <div class="dns-card-item">
+                            <span>alidns-doh</span>
+                            <a href="https://dns-tool.oss-cn-beijing.aliyuncs.com/doh-sdk/desc/Signed-AliDNS-https-Host.mobileconfig" class="btn">下载</a>
+                        </div>
+                        <div class="dns-card-item">
+                            <span>alidns-dot</span>
+                            <a href="https://dns-tool.oss-cn-beijing.aliyuncs.com/doh-sdk/desc/Signed-AliDNS-TLS-Host.mobileconfig" class="btn">下载</a>
+                        </div>
+                    </div>
+                    <div class="dns-card">
+                        <h4>🔵 腾讯 DoT/DoH (DNSPod)</h4>
+                        <div class="dns-card-item">
+                            <span>doh.pub</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/doh.pub-doh.mobileconfig" class="btn">下载</a>
+                        </div>
+                        <div class="dns-card-item">
+                            <span>sm2-doh.pub</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/sm2-doh.pub-doh.mobileconfig" class="btn">下载</a>
+                        </div>
+                        <div class="dns-card-item">
+                            <span>dot.pub</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/dot.pub-dot.mobileconfig" class="btn">下载</a>
+                        </div>
+                    </div>
+                    <div class="dns-card">
+                        <h4>🟠 360 DoT/DoH (360)</h4>
+                        <div class="dns-card-item">
+                            <span>doh.360.cn</span>
+                            <a href="https://sdns.360.net/360-public-https.mobileconfig" class="btn">下载</a>
+                        </div>
+                        <div class="dns-card-item">
+                            <span>dot.360.cn</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/dot.360.cn-dot.mobileconfig" class="btn">下载</a>
+                        </div>
+                    </div>
+                    <div class="dns-card">
+                        <h4>⚪ onedns.net DoT/DoH</h4>
+                        <div class="dns-card-item">
+                            <span>doh-pure.onedns.net</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/doh-pure.onedns.net.mobileconfig" class="btn">下载</a>
+                        </div>
+                        <div class="dns-card-item">
+                            <span>dot-pure.onedns.net</span>
+                            <a href="https://file-git.trli.club/file/ios-dns/other/dot-pure.onedns.net.mobileconfig" class="btn">下载</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他/Other -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">📊 其他 / Other</div>
+            <div class="card-content">
+                <p><strong>您的浏览器UA为：</strong> <span id="userAgent"></span></p>
+                <div style="margin: 1rem 0;">
+                    <strong>IP/网站连通性检查：</strong>
+                    <iframe src="" data-src="https://ip.skk.moe/simple" loading="lazy" title="IP/网站连通性检查" style="width: 100%; border: 0; height: 120px; border-radius: 8px; margin-top: 0.5rem;"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- GitHub 加速规则 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">⚡ GitHub 加速规则列表</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">📃 更新时间为每1个小时更新一次</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>规则名称</th>
+                                <th>下载链接</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hosts 加速</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/github-hosts/Accelerate-Hosts.txt" class="btn">下载</a></td>
+                            </tr>
+                            <tr>
+                                <td>gfw 加速</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/github-hosts/gfw-hosts.txt" class="btn">下载</a></td>
+                            </tr>
+                            <tr>
+                                <td>bilibili-Hosts 加速</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/github-hosts/bilibili-hosts.txt" class="btn">下载</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- cn-blocked-domain -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">🚫 cn-blocked-domain (gfw)</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">📃 更新时间为每24小时更新一次</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>规则名称</th>
+                                <th>下载链接</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>cn-blocked-domain</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/domains.txt" class="btn">下载</a></td>
+                            </tr>
+                            <tr>
+                                <td>cn-blocked-ip</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/ip.txt" class="btn">下载</a></td>
+                            </tr>
+                            <tr>
+                                <td>cn-blocked-raw</td>
+                                <td><a href="https://github.com/Potterli20/file/releases/download/cn-blocked-domain/raw.txt" class="btn">下载</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 去广告规则 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">🚫 去广告规则列表</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">📃 更新时间为每6-12小时更新一次</p>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--text-secondary);">其他规则</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>My Allow (白名单)</td><td><a href="https://file-git.trli.club/file-hosts/allow/Domains" class="btn">下载</a></td></tr>
+                            <tr><td>Allow (白名单)</td><td><a href="https://github.com/Potterli20/file/releases/download/github-hosts/allow.txt" class="btn">下载</a></td></tr>
+                            <tr><td>edge-domains</td><td><a href="https://github.com/Potterli20/file/releases/download/github-hosts/ad-edge-hosts.txt" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--text-secondary);">AdHosts-Pro 规则</h4>
+                <div class="notice">
+                    <p>🛑 AdHosts-Pro 是用全球黑名单和一个我自己的白名单进行规则合并</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>AdHosts-Pro (ad-adblock)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adblock.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-hosts/pi-hole)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-hosts.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-adguardhome)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adguardhome.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-adguardhome-dnstype)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-adguardhome-dnstype.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-clash)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-clash.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-clash-premium)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-clash-premium.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-dnsmasq)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-dnsmasq.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-domains)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-domains.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-quantumult)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-quantumult.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-shadowrocket)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-shadowrocket.list" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-smartdns.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-surge)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-surge.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-unbound)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-unbound.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-Pro (ad-bind9)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-pro/ad-bind9.conf" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--text-secondary);">AdHosts-lite 规则</h4>
+                <div class="notice">
+                    <p>🛑 AdHosts-lite 是用全球黑名单和全球白名单进行规则合并</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>AdHosts-lite (ad-adblock)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adblock.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-hosts/pi-hole)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-hosts.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-adguardhome)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adguardhome.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-adguardhome-dnstype)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-adguardhome-dnstype.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-clash)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-clash.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-clash-premium)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-clash-premium.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-dnsmasq)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-dnsmasq.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-domains)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-domains.txt" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-quantumult)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-quantumult.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-shadowrocket)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-shadowrocket.list" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-smartdns.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-surge)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-surge.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-unbound)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-unbound.conf" class="btn">下载</a></td></tr>
+                            <tr><td>AdHosts-lite (ad-bind9)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-hosts-lite/ad-bind9.conf" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--text-secondary);">YouTube 去广告规则</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Ad-YouTube-Hosts (ad-adblock)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adblock.txt" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-hosts/pi-hole)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-hosts.txt" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-adguardhome)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adguardhome.txt" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-adguardhome-dnstype)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-adguardhome-dnstype.txt" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-clash)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-clash.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-clash-premium)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-clash-premium.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-dnsmasq)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-dnsmasq.conf" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-domains)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-domains.txt" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-quantumult)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-quantumult.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-shadowrocket)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-shadowrocket.list" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-smartdns.conf" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-surge)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-surge.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-unbound)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-unbound.conf" class="btn">下载</a></td></tr>
+                            <tr><td>Ad-YouTube-Hosts (ad-bind9)</td><td><a href="https://github.com/Potterli20/file/releases/download/ad-youtube-hosts/ad-youtube-bind9.conf" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNS 分流加速规则 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">🌐 DNS 分流加速规则列表</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">📃 更新时间为每6-12小时更新一次</p>
+
+                <h4 style="margin: 1rem 0; color: var(--accent);">dnshosts-all 规则</h4>
+                <div class="notice">
+                    <p>🛑 dnshosts-all 是全部程序的配置文件，包括 DNS over HTTPS、TLS、QUIC 的国内外公共 DNS</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>dnshosts-all-中国完整分流规则 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-blacklist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国快速分流规则 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-blacklist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-whitelist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际快速分流规则 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-adguardhome-whitelist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国完整分流规则 (bind9)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-bind9-blacklist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (bind9)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-bind9-whitelist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国完整分流规则 (unbound)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-unbound-blacklist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (unbound)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-unbound-whitelist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国完整分流规则 (dnsmasq)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-dnsmasq-blacklist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (dnsmasq)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-dnsmasq-whitelist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国完整分流规则 (smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-blacklist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国快速分流规则 (smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-blacklist_lite.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-whitelist_full.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际快速分流规则 (smartdns)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-smartdns-whitelist_lite.conf" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国完整分流规则 (domain)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-blacklist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-中国快速分流规则 (domain)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-blacklist_lite.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际完整分流规则 (domain)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-whitelist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-all-国际快速分流规则 (domain)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-all/dnshosts-all-domain-whitelist_lite.txt" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--accent);">dnshosts-adgh-pro 规则 (旧版)</h4>
+                <div class="notice">
+                    <p>🛑 dnshosts-adgh-pro 是 adguardhome/dnsproxy 配置文件，包括 DNS over HTTPS、TLS、QUIC，不包括 IP</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>dnshosts-adgh-pro-中国完整分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-blacklist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-中国快速分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-blacklist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-国际完整分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-whitelist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-国际快速分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-whitelist_full.txt" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--accent);">dnshosts-adgh-pro 规则 (新版)</h4>
+                <div class="notice">
+                    <p>🛑 dnshosts-adgh-pro 是 adguardhome/dnsproxy 配置文件，包括 DNS over HTTPS、TLS、QUIC、HTTP3，不包括 IP</p>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>dnshosts-adgh-pro-中国完整分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-blacklist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-中国快速分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-blacklist_full.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-国际完整分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-whitelist_full_combine.txt" class="btn">下载</a></td></tr>
+                            <tr><td>dnshosts-adgh-pro-国际快速分流 (adguardhome/dnsproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/dns-hosts-adgh-pro/dnshosts-adgh-pro-adguardhome-new-whitelist_full.txt" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 程序分流加速规则 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">📱 程序分流加速规则列表</div>
+            <div class="card-content">
+                <p style="color: var(--text-muted); margin-bottom: 1rem;">📃 更新时间为每24小时更新一次</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>规则名称</th><th>下载链接</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>ListPac (listpac_china_autoproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_autoproxy.txt" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_clash)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_clash.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_clash_premium)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_clash_premium.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_quantumult)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_quantumult.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_shadowrocket)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_shadowrocket.conf" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_surge)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_surge.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_v2raya)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_v2raya.txt" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_china_v2rayn)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_china_v2rayn.txt" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_autoproxy)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_autoproxy.txt" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_clash)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_clash.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_clash_premium)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_clash_premium.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_quantumult)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_quantumult.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_shadowrocket)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_shadowrocket.conf" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_surge)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_surge.yaml" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_v2raya)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_v2raya.txt" class="btn">下载</a></td></tr>
+                            <tr><td>ListPac (listpac_gfwlist_v2rayn)</td><td><a href="https://github.com/Potterli20/file/releases/download/listpac/listpac_gfwlist_v2rayn.txt" class="btn">下载</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 反馈 -->
+        <div class="card">
+            <div class="card-header" onclick="toggleCard(this)">💬 反馈</div>
+            <div class="card-content">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="https://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&inviteCode=1NPqQe&from=246610&biz=ka" class="btn">QQ频道【莫莫频道】</a>
+                    <a href="https://github.com/Potterli20/hosts/discussions" class="btn">GitHub 讨论区</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="datetime">
+            系统时间: <span id="dateTime"></span>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 TRLI Project | <a href="https://github.com/Potterli20/hosts">GitHub</a></p>
+    </div>
+
+    <script>
+        // Card toggle
+        function toggleCard(header) {
+            const card = header.parentElement;
+            card.classList.toggle('open');
+            header.setAttribute('aria-expanded', card.classList.contains('open') ? 'true' : 'false');
+        }
+
+        (function () {
+            // Keyboard accessibility for collapsible cards
+            document.querySelectorAll('.card-header').forEach(function (header) {
+                header.setAttribute('role', 'button');
+                header.setAttribute('tabindex', '0');
+                header.setAttribute('aria-expanded', header.parentElement.classList.contains('open') ? 'true' : 'false');
+                header.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleCard(header);
+                    }
+                });
+            });
+
+            // Browser UA
+            var ua = document.getElementById('userAgent');
+            if (ua) ua.textContent = navigator.userAgent;
+
+            // Lazy-load connectivity iframe on first expand
+            var iframe = document.querySelector('iframe[data-src]');
+            if (iframe) {
+                var iframeCard = iframe.closest('.card');
+                var loadFrame = function () { iframe.src = iframe.getAttribute('data-src'); };
+                if (iframeCard.classList.contains('open')) {
+                    loadFrame();
+                } else {
+                    iframeCard.querySelector('.card-header').addEventListener('click', loadFrame, { once: true });
+                }
+            }
+
+            // Copy button for each rule link
+            document.querySelectorAll('td a.btn, .dns-card-item a.btn').forEach(function (link) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'btn btn-copy';
+                btn.textContent = '📋 复制';
+                btn.addEventListener('click', function () {
+                    function done(ok) {
+                        btn.textContent = ok ? '✅ 已复制' : '❌ 失败';
+                        setTimeout(function () { btn.textContent = '📋 复制'; }, 1500);
+                    }
+                    function fallback() {
+                        var ta = document.createElement('textarea');
+                        ta.value = link.href;
+                        ta.style.position = 'fixed';
+                        ta.style.opacity = '0';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        var ok = false;
+                        try { ok = document.execCommand('copy'); } catch (e) {}
+                        document.body.removeChild(ta);
+                        return ok;
+                    }
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(link.href).then(function () { done(true); }, function () { done(fallback()); });
+                    } else {
+                        done(fallback());
+                    }
+                });
+                link.parentNode.appendChild(btn);
+            });
+
+            // Rule search: filter table rows, expand matched cards, restore on clear
+            var searchInput = document.getElementById('ruleSearch');
+            if (searchInput) {
+                var cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+                var savedOpen = null;
+                searchInput.addEventListener('input', function () {
+                    var q = searchInput.value.trim().toLowerCase();
+                    if (q && savedOpen === null) {
+                        savedOpen = cards.map(function (c) { return c.classList.contains('open'); });
+                    }
+                    if (!q && savedOpen !== null) {
+                        cards.forEach(function (c, i) {
+                            c.classList.toggle('open', savedOpen[i]);
+                            c.querySelector('.card-header').setAttribute('aria-expanded', savedOpen[i] ? 'true' : 'false');
+                            c.style.display = '';
+                            c.querySelectorAll('tbody tr').forEach(function (row) { row.style.display = ''; });
+                        });
+                        savedOpen = null;
+                        return;
+                    }
+                    cards.forEach(function (card) {
+                        var rows = card.querySelectorAll('tbody tr');
+                        if (rows.length === 0) {
+                            card.style.display = (!q || card.textContent.toLowerCase().indexOf(q) !== -1) ? '' : 'none';
+                            return;
+                        }
+                        var any = false;
+                        rows.forEach(function (row) {
+                            var show = !q || row.textContent.toLowerCase().indexOf(q) !== -1;
+                            row.style.display = show ? '' : 'none';
+                            if (show) any = true;
+                        });
+                        card.style.display = any ? '' : 'none';
+                        if (q && any) {
+                            card.classList.add('open');
+                            card.querySelector('.card-header').setAttribute('aria-expanded', 'true');
+                        }
+                    });
+                });
+            }
+        })();
+
+        // Date time
+        function updateDateTime() {
+            const now = new Date();
+            const pad = n => n.toString().padStart(2, '0');
+            document.getElementById('dateTime').textContent =
+                `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Background script
+        var hm = document.createElement("script");
+        hm.src = "https://file-git.trli.club/file/js/background-html.js";
+        document.head.appendChild(hm);
+    </script>
+</body>
+</html>
